@@ -1,0 +1,71 @@
+﻿
+@using company.Models;
+<link href="~/css/Header.css" rel="stylesheet" type="text/css" media="all" />
+<link href="~/css/font-awesome.css" rel="stylesheet" type="text/css" media="all" />
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body>
+    <div class="agileits_header">
+        <div class="container">
+            <div class="w3l_offers">
+
+                <a href="~/Home/index">company logo</a></p>
+            </div>
+            <div class="agile-login">
+                <ul class="nav navbar-nav navbar-right">
+
+                    <li> @Html.ActionLink("Orders", "yourorders", "Home", new { email=HttpContext.Current.User.Identity.Name})</li>
+                </ul>
+
+                @Html.Partial("_LoginPartial")
+                @*<li><a href="registered.html"> Create Account </a></li>
+                    <li><a href="login.html">Login</a></li>*@
+                @*<li><a href="contact.html">orders</a></li>*@
+                
+
+
+</div>
+            <div class="product_list_header">
+                @*<form action="#" method="post" class="last">*@
+                  
+                        <input type="hidden" name="cmd" value="_cart">
+                        <input type="hidden" name="display" value="1">
+                      
+                   
+                    <button onclick="myFunction()" class="w3view-cart" type="submit" name="submit" value=""><i class="fa fa-cart-arrow-down" aria-hidden="true"></i></button>
+                @{
+                    tshirtsEntities db=new tshirtsEntities();
+                    Html.RenderAction("showorder", "Home");
+                }
+              
+               
+
+@*</form>*@
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            @Html.ActionLink("Contact supplier","Contact","Home")
+        </footer>
+    </div>
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
+

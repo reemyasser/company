@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="tshirtsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Color">
+    <Key>
+      <PropertyRef Name="ColorId" />
+    </Key>
+    <Property Name="ColorId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProductId" Type="int" Nullable="false" />
+    <Property Name="color" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Img" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="Order">
+    <Key>
+      <PropertyRef Name="OrderId" />
+    </Key>
+    <Property Name="OrderId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="OrderDate" Type="datetime" />
+  </EntityType>
+  <EntityType Name="OrderDetails">
+    <Key>
+      <PropertyRef Name="OrderDetailsId" />
+    </Key>
+    <Property Name="OrderDetailsId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProductId" Type="int" Nullable="false" />
+    <Property Name="OrderId" Type="int" Nullable="false" />
+    <Property Name="Quentity" Type="int" Nullable="false" />
+    <Property Name="Size" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="ColorId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PreviousOrder">
+    <Key>
+      <PropertyRef Name="previd" />
+    </Key>
+    <Property Name="Size" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Quentity" Type="int" Nullable="false" />
+    <Property Name="color" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="productid" Type="int" Nullable="false" />
+    <Property Name="previd" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="userid" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Product">
+    <Key>
+      <PropertyRef Name="ProductId" />
+    </Key>
+    <Property Name="ProductId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Price" Type="float" Nullable="false" />
+    <Property Name="ProductName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="whalesaleprice" Type="float" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="UserId" />
+    </Key>
+    <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="IsEmailVerified" Type="bit" Nullable="false" />
+    <Property Name="ActivationCode" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="code" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'tshirts.dbo.ordersview' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="ordersview">
+    <Key>
+      <PropertyRef Name="OrderDetailsId" />
+    </Key>
+    <Property Name="OrderDetailsId" Type="int" Nullable="false" />
+    <Property Name="ColorId" Type="int" Nullable="false" />
+    <Property Name="OrderId" Type="int" Nullable="false" />
+    <Property Name="ProductId" Type="int" Nullable="false" />
+    <Property Name="Size" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="OrderDate" Type="datetime" />
+    <Property Name="Quentity" Type="int" Nullable="false" />
+    <Property Name="UserId" Type="int" Nullable="false" />
+    <Property Name="color" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="Img" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityContainer Name="tshirtsModelStoreContainer">
+    <EntitySet Name="Color" EntityType="Self.Color" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="OrderDetails" EntityType="Self.OrderDetails" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PreviousOrder" EntityType="Self.PreviousOrder" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ordersview" EntityType="Self.ordersview" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [ordersview].[OrderDetailsId] AS [OrderDetailsId], 
+    [ordersview].[ColorId] AS [ColorId], 
+    [ordersview].[OrderId] AS [OrderId], 
+    [ordersview].[ProductId] AS [ProductId], 
+    [ordersview].[Size] AS [Size], 
+    [ordersview].[OrderDate] AS [OrderDate], 
+    [ordersview].[Quentity] AS [Quentity], 
+    [ordersview].[UserId] AS [UserId], 
+    [ordersview].[color] AS [color], 
+    [ordersview].[Img] AS [Img]
+    FROM [dbo].[ordersview] AS [ordersview]</DefiningQuery>
+    </EntitySet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,44 @@
+﻿@model IEnumerable<company.Models.Color>
+
+@{
+    ViewBag.Title = "viewcolor";
+}
+
+<h2>viewcolor</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Createcolor", new {id=  this.ViewContext.RouteData.Values["id"] })
+</p>
+<table class="table">
+    <tr>
+       
+        <th>
+            @Html.DisplayNameFor(model => model.Img)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.color1)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        @if (item.Img != null) {
+        <td>
+           
+            <img alt="@item.Img"
+                 src="data:image/jpg;base64,@Convert.ToBase64String(item.Img)" style="width: 200px; height:200px" />
+        </td>}
+        <td>
+            @Html.DisplayFor(modelItem => item.color1)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "editcolor", new { id = this.ViewContext.RouteData.Values["id"], idcolor = item.ColorId }) |
+          
+            @Html.ActionLink("Delete", "deletecolor", new { id = this.ViewContext.RouteData.Values["id"], idcolor=item.ColorId })
+        </td>
+    </tr>
+}
+
+</table>
+@Html.ActionLink("Back to List", "Index")

@@ -1,0 +1,190 @@
+﻿@model IEnumerable<company.Models.Product>
+@using company.Models;
+
+
+<!-- //for-mobile-apps -->
+
+<link href="~/css/Header.css" rel="stylesheet" type="text/css" media="all" />
+
+<link href="~/css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+<link href="~/css/style_home.css" rel="stylesheet" type="text/css" media="all" />
+<link href="~/css/font-awesome.css" rel="stylesheet" type="text/css" media="all" />
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+@{
+    
+   
+    ViewBag.Title = "Index";
+}
+
+@*<h2> welcome</h2> @HttpContext.Current.User.Identity.Name*@
+
+<!-- //header -->
+
+@*<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>*@
+
+<!-- header -->
+@if ( Convert.ToBoolean(Session["status"]))
+{
+
+    <div class="alert alert-success">
+
+
+        <strong> success!</strong> your order will arrive after 2 day
+    </div>
+
+}
+<div class="logo_products">
+    <div class="container">
+        <div class="w3ls_logo_products_left1">
+            <ul class="phone_email">
+                <li><i class="fa fa-phone" aria-hidden="true"></i>Order online or call us : +201140452296</li>
+
+            </ul>
+        </div>
+        <div class="w3ls_logo_products_left">
+            <h1><a href="index.html">Company Name</a></h1>
+        </div>
+        @using (Html.BeginForm("Index","Home", FormMethod.Get)) { 
+        <div class="w3l_search">
+           
+                <input type="search" name="Search"  placeholder="Search for a Product..." required="">
+                <button type="submit" class="btn btn-default search" aria-label="Left Align">
+                    <i class="fa fa-search" aria-hidden="true"> </i>
+                </button>
+                <div class="clearfix"></div>
+           
+        </div>}
+
+        <div class="clearfix"> </div>
+    </div>
+</div>
+<!-- //header -->
+
+@*<div class="header">
+    <a href="#default" class="logo">CompanyLogo</a>
+    <div class="header-right">
+        <a href="#home">login</a>
+        <a href="#contact">orders</a>
+        <a href="#about" class="cart">cart</a>
+    </div>
+</div>*@
+
+<!-- navigation -->
+
+
+<div class="navigation-agileits">
+    <div class="container">
+        <nav class="navbar navbar-default">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header nav_2">
+                <button type="button" class="navbar-toggle collapsed navbar-toggle1" data-toggle="collapse" data-target="#bs-megadropdown-tabs">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-megadropdown-tabs">
+                <ul class="nav navbar-nav"></ul>
+            </div>
+        </nav>
+    </div>
+</div>
+
+<!-- //navigation -->
+<!-- //top-header and slider -->
+<!-- top-brands -->
+<div class="top-brands">
+    <div class="container">
+        <h2>Top selling offers</h2>
+        @{tshirtsEntities db = new tshirtsEntities(); }
+
+        @foreach (var item in Model)
+        {
+
+    <div class="agile_top_brands_grids">
+        <div class="col-md-4 top_brand_left">
+            <div class="hover14 column">
+              
+
+
+                    <div class="agile_top_brand_left_grid">
+
+                        <div class="agile_top_brand_left_grid_pos">
+                            <img src="~/images/offer.png" alt=" " class="img-responsive" />
+                        </div>
+                        <div class="agile_top_brand_left_grid1">
+                            <figure>
+
+                                <div class="snipcart-item block">
+
+                                    <div class="snipcart-thumb">
+
+                                        @{
+
+
+
+            var name1 = (from p in (db.Product)
+                         where item.ProductId == p.ProductId
+                         select p.ProductName).FirstOrDefault();
+
+            var price1 = (from p in (db.Product)
+                          where item.ProductId == p.ProductId
+                          select p.Price).FirstOrDefault();
+            var whalesaleprice = (from p in (db.Product)
+                                  where item.ProductId == p.ProductId
+                                  select p.whalesaleprice).FirstOrDefault();
+            var Img = (from p in (db.Color)
+                       where item.ProductId == p.ProductId
+                       select p.Img).FirstOrDefault();
+
+                                        }
+
+                                        <a href="~/Home/tshirtorder?id1=@item.ProductId&email=@HttpContext.Current.User.Identity.Name">
+                                            <img alt="@Img"
+                                                 src="data:image/jpg;base64,@Convert.ToBase64String(Img)" />
+
+                                            <br /> <p>@name1 <br /> <h4>@whalesaleprice - @price1 £  </h4></p>
+                                        </a>
+
+
+
+                                    </div>
+
+
+
+                                </div>
+
+                            </figure>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+      
+        </div>
+
+
+
+        }<input type="hidden" name="email" value="@HttpContext.Current.User.Identity.Name" />
+
+    </div>
+</div>
+
+
+
+
+
+<hr />
+<footer>
+    <p>&copy; @DateTime.Now.Year - My Company Name</p>
+</footer>
+
+
+
+
+
+

@@ -1,0 +1,317 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="tshirtsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Color">
+          <Key>
+            <PropertyRef Name="ColorId" />
+          </Key>
+          <Property Name="ColorId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductId" Type="int" Nullable="false" />
+          <Property Name="color" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Img" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="OrderId" />
+          </Key>
+          <Property Name="OrderId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="OrderDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="OrderDetails">
+          <Key>
+            <PropertyRef Name="OrderDetailsId" />
+          </Key>
+          <Property Name="OrderDetailsId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductId" Type="int" Nullable="false" />
+          <Property Name="OrderId" Type="int" Nullable="false" />
+          <Property Name="Quentity" Type="int" Nullable="false" />
+          <Property Name="Size" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ColorId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PreviousOrder">
+          <Key>
+            <PropertyRef Name="previd" />
+          </Key>
+          <Property Name="Size" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Quentity" Type="int" Nullable="false" />
+          <Property Name="color" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="productid" Type="int" Nullable="false" />
+          <Property Name="previd" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="userid" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="ProductId" />
+          </Key>
+          <Property Name="ProductId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Price" Type="float" Nullable="false" />
+          <Property Name="ProductName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="whalesaleprice" Type="float" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="IsEmailVerified" Type="bit" Nullable="false" />
+          <Property Name="ActivationCode" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="code" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'tshirts.dbo.ordersview' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ordersview">
+          <Key>
+            <PropertyRef Name="OrderDetailsId" />
+            
+            
+            
+            
+            
+            
+            
+            
+          </Key>
+          <Property Name="OrderDetailsId" Type="int" Nullable="false" />
+          <Property Name="ColorId" Type="int" Nullable="false" />
+          <Property Name="OrderId" Type="int" Nullable="false" />
+          <Property Name="ProductId" Type="int" Nullable="false" />
+          <Property Name="Size" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="OrderDate" Type="datetime" />
+          <Property Name="Quentity" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="color" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Img" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="tshirtsModelStoreContainer">
+          <EntitySet Name="Color" EntityType="Self.Color" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderDetails" EntityType="Self.OrderDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PreviousOrder" EntityType="Self.PreviousOrder" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ordersview" EntityType="Self.ordersview" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [ordersview].[OrderDetailsId] AS [OrderDetailsId], 
+    [ordersview].[ColorId] AS [ColorId], 
+    [ordersview].[OrderId] AS [OrderId], 
+    [ordersview].[ProductId] AS [ProductId], 
+    [ordersview].[Size] AS [Size], 
+    [ordersview].[OrderDate] AS [OrderDate], 
+    [ordersview].[Quentity] AS [Quentity], 
+    [ordersview].[UserId] AS [UserId], 
+    [ordersview].[color] AS [color], 
+    [ordersview].[Img] AS [Img]
+    FROM [dbo].[ordersview] AS [ordersview]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="tshirtsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="ProductId" />
+          </Key>
+          <Property Name="ProductId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Price" Type="Double" Nullable="false" />
+          <Property Name="ProductName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="whalesaleprice" Type="Double" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="tshirtsEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Product" EntityType="Self.Product" />
+          <EntitySet Name="ordersview" EntityType="tshirtsModel.ordersview" />
+          <EntitySet Name="OrderDetails" EntityType="tshirtsModel.OrderDetails" />
+          <EntitySet Name="Color" EntityType="tshirtsModel.Color" />
+          <EntitySet Name="Order" EntityType="tshirtsModel.Order" />
+          <EntitySet Name="PreviousOrder" EntityType="tshirtsModel.PreviousOrder" />
+          <EntitySet Name="Users" EntityType="tshirtsModel.Users" />
+        </EntityContainer>
+        <EntityType Name="ordersview">
+          <Key>
+            <PropertyRef Name="OrderDetailsId" />
+          </Key>
+          <Property Name="ColorId" Type="Int32" Nullable="false" />
+          <Property Name="OrderId" Type="Int32" Nullable="false" />
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <Property Name="Size" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="color" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Img" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="Quentity" Type="Int32" Nullable="false" />
+          <Property Name="OrderDate" Type="DateTime" Precision="3" />
+          <Property Name="OrderDetailsId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="OrderDetails">
+          <Key>
+            <PropertyRef Name="OrderDetailsId" />
+          </Key>
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <Property Name="OrderId" Type="Int32" Nullable="false" />
+          <Property Name="OrderDetailsId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Quentity" Type="Int32" Nullable="false" />
+          <Property Name="Size" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ColorId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Color">
+          <Key>
+            <PropertyRef Name="ColorId" />
+          </Key>
+          <Property Name="ColorId" Type="Int32" Nullable="false" />
+          <Property Name="ProductId" Type="Int32" Nullable="false" />
+          <Property Name="color1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Img" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="OrderId" />
+          </Key>
+          <Property Name="OrderId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="OrderDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="PreviousOrder">
+          <Key>
+            <PropertyRef Name="previd" />
+          </Key>
+          <Property Name="Size" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Quentity" Type="Int32" Nullable="false" />
+          <Property Name="color" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="productid" Type="Int32" Nullable="false" />
+          <Property Name="previd" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="userid" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsEmailVerified" Type="Boolean" Nullable="false" />
+          <Property Name="ActivationCode" Type="Guid" Nullable="false" />
+          <Property Name="code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="tshirtsModelStoreContainer" CdmEntityContainer="tshirtsEntities">
+          <EntitySetMapping Name="Product">
+            <EntityTypeMapping TypeName="tshirtsModel.Product">
+              <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="whalesaleprice" ColumnName="whalesaleprice" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ordersview">
+            <EntityTypeMapping TypeName="tshirtsModel.ordersview">
+              <MappingFragment StoreEntitySet="ordersview">
+                <ScalarProperty Name="OrderDetailsId" ColumnName="OrderDetailsId" />
+                <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+                <ScalarProperty Name="Quentity" ColumnName="Quentity" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Img" ColumnName="Img" />
+                <ScalarProperty Name="color" ColumnName="color" />
+                <ScalarProperty Name="Size" ColumnName="Size" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="ColorId" ColumnName="ColorId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderDetails">
+            <EntityTypeMapping TypeName="tshirtsModel.OrderDetails">
+              <MappingFragment StoreEntitySet="OrderDetails">
+                <ScalarProperty Name="ColorId" ColumnName="ColorId" />
+                <ScalarProperty Name="Size" ColumnName="Size" />
+                <ScalarProperty Name="Quentity" ColumnName="Quentity" />
+                <ScalarProperty Name="OrderDetailsId" ColumnName="OrderDetailsId" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Color">
+            <EntityTypeMapping TypeName="tshirtsModel.Color">
+              <MappingFragment StoreEntitySet="Color">
+                <ScalarProperty Name="Img" ColumnName="Img" />
+                <ScalarProperty Name="color1" ColumnName="color" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="ColorId" ColumnName="ColorId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Order">
+            <EntityTypeMapping TypeName="tshirtsModel.Order">
+              <MappingFragment StoreEntitySet="Order">
+                <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PreviousOrder">
+            <EntityTypeMapping TypeName="tshirtsModel.PreviousOrder">
+              <MappingFragment StoreEntitySet="PreviousOrder">
+                <ScalarProperty Name="userid" ColumnName="userid" />
+                <ScalarProperty Name="previd" ColumnName="previd" />
+                <ScalarProperty Name="productid" ColumnName="productid" />
+                <ScalarProperty Name="color" ColumnName="color" />
+                <ScalarProperty Name="Quentity" ColumnName="Quentity" />
+                <ScalarProperty Name="Size" ColumnName="Size" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="tshirtsModel.Users">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="ActivationCode" ColumnName="ActivationCode" />
+                <ScalarProperty Name="IsEmailVerified" ColumnName="IsEmailVerified" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

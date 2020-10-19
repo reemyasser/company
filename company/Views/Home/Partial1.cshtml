@@ -1,0 +1,333 @@
+﻿@model IEnumerable<company.Models.PreviousOrder>
+@using company.Models;
+@using company.Controllers;
+<link href="~/css/Header.css" rel="stylesheet" type="text/css" media="all" />
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://gh-canon.github.io/misc-demos/log-test-click.js" defer></script>
+
+@{
+    tshirtsEntities db = new tshirtsEntities();
+    var preid = 0;
+    int i = 0;
+    int totalprice = 0;
+    int total = 0;
+    var price = 0;
+}
+<label class="labelalert" id="alert-danger"> <strong> please login</strong> </label>
+<div id="minicart" class="minicart">
+    <button id="btnx1" class="btnx1" onclick="myFunctiont()"> X</button>
+
+    <div id="inminicart" class="inminicart">
+
+        <ul class="ul1">
+            @{int userid= Convert.ToInt32((from o in db.Users
+                          where o.Email ==HttpContext.Current.User.Identity.Name
+                          select o.UserId).FirstOrDefault());}
+            @foreach (var m in Model)
+            {
+                if (m.userid == userid)
+                {
+                    i++;
+                <li id="@("oneorder" + i)" class="oneorder">
+                    <label>
+                        @{var productname = (from b in db.Product
+                                             where b.ProductId == m.productid
+
+                                             select b.ProductName).FirstOrDefault();  }
+                        @productname
+                    </label>
+
+                    <input class="inputnumber" type="number" value="@m.Quentity" />
+
+                    <select class="inputsize" id="Size" name="Size">
+                        @{if (m.Size == "S")
+                          {
+                            <option value="S" selected>S</option>
+                          }
+                          else
+                          {
+                            <option value="S">S</option>
+                          }
+                          if (m.Size == "X")
+                          {
+                            <option value="L" selected>L</option>
+                          }
+                          else
+                          {
+                            <option value="L">L</option>
+                          }
+
+                          if (m.Size == "XL")
+                          {
+                            <option value="XL" selected>XL</option>
+                          }
+                          else
+                          {
+                            <option value="XL">XL</option>
+                          }
+                          if (m.Size == "XXL")
+                          {
+                            <option value="XXL" selected>XXL</option>
+                          }
+                          else
+                          {
+                            <option value="XXL">XXL</option>
+                          }
+
+
+
+
+                        }
+
+                    </select>
+                    <select class="inputcolor" id="colors" name="colors">
+                        @if(m.color=="red"){
+                              <option selected value="S">red</option>
+                        }
+                        else
+                        { 
+                            <option value="S">red</option>
+                        }
+                        @if(m.color=="white"){
+                        <option selected value="S">white</option>
+                        }
+                        else
+                        {
+                        <option value="S">white</option>
+                        }
+                        @if(m.color=="black"){
+                        <option selected value="S">black</option>
+                        }
+                        else
+                        {
+                        <option value="S">black</option>
+                        }
+
+                        <option value="L">black</option>
+                        <option value="XL">XL</option>
+                        <option value="XXL">XXL</option>
+                    </select>
+                    <label class="lblprice">
+                       @if (m.Quentity <= 10)
+                       { price = Convert.ToInt32( (from b in db.Product
+                                        where b.ProductId == m.productid
+                                        select b.Price).FirstOrDefault());
+
+                       }
+                       else
+                       {
+                            price =Convert.ToInt32( (from b in db.Product
+                                        where b.ProductId == m.productid
+                                        select b.whalesaleprice).FirstOrDefault());
+                       }
+                        @price
+                    </label>
+
+
+                    <button type="submit" id="@i" value="@m.previd" name="xpre" class="btnx" onclick="myFunction1()">x</button>
+
+
+                </li>
+
+                
+                    if (m.Quentity <= 10)
+                    {
+                       total = Convert.ToInt32 ((from p in db.Product
+                                     where p.ProductId == m.productid
+                                     select p.Price).FirstOrDefault());
+                    }
+                    else
+                    {
+
+                        total = Convert.ToInt32((from p in db.Product
+                                     where p.ProductId == m.productid
+                                     select p.whalesaleprice).FirstOrDefault());
+                    }
+                    totalprice = totalprice + total;
+                }
+            }
+
+        </ul>
+
+    </div>
+    <br />
+    
+    <table>
+        <tr>
+            <td>
+                <label class="totalprice">Total price :  </label>
+            </td>
+            <td>
+                <label> @totalprice £</label>
+            </td>
+        </tr>
+    </table>
+    <input type="hidden"  value="@i" id="z" class="btn_addto" />
+
+    <input type="submit" value="Buy" onclick="buy()" class="btn_addto" />
+</div>
+
+
+<div id="minicart1" class="minicart1">
+    <button id="btnx1" class="btnx1" onclick="myfunction2()"> X</button>
+
+
+@using (Html.BeginForm("buy", "Home", FormMethod.Post))
+{
+
+
+
+    <div id="inminicart" class="inminicart">
+        <table>
+            
+                <tr>
+                    <td><label>Your Adress</label></td>
+
+                    <td>
+                        <textarea required="" name="adress" rows="5" cols="60" placeholder="please enter your Details Adress"></textarea>
+                  @Html.ValidationMessage("adress","please enter your adress")
+                      </td>
+          
+            </tr>
+            <tr>
+                <td><label>Your Phone</label>
+
+</td>
+
+                <td>
+
+                    <input name="phone1" type="tel"  required=""/>
+                @Html.ValidationMessage("phone1", "please enter your phone")     </td>
+            </tr>
+
+           
+          <tr>
+              <td>
+                  <label>Anthor phone </label>
+              </td>
+              <td>
+                  <input name="phone2" type="tel" required="" />
+                  @Html.ValidationMessage("phone2", "please enter your phone")
+              </td>
+          </tr>
+            
+        </table>
+        <input type="hidden" id="emailvalue" name="email" class="emailvalue" value="@HttpContext.Current.User.Identity.Name" />
+        <input type="hidden" value="@HttpContext.Current.User.Identity.Name" class="mail" id="mail" />
+        <input type="submit" value="Buy"  class="btn_addto" />
+    </div>
+}
+</div>
+
+
+
+
+        <script>
+            function onclickbuy() {
+
+                $.ajax({
+                    url: "/Home/buy",
+                    datatype: "text",
+                    data: { 'id': li },
+                    type: "POST",
+                    success: function (data) {
+                        $('#testarea').html("All OK");
+                    },
+                    error: function () {
+                        $("#testarea").html("ERROR");
+                    }
+                });
+
+            }
+
+            function myFunction() {
+                var x = document.getElementById("minicart");
+                var mail = document.getElementById("mail").value;
+                var label= document.getElementById("alert-danger");
+                console.log(mail);
+                if (mail == "") {
+                    x.style.display = "none";
+                    label.style.display = "block";
+                }
+                else {
+                    label.style.display = "none";
+                    if (x.style.display === "block") {
+                        x.style.display = "none";
+                    }
+
+                    else {
+                        x.style.display = "block";
+                    }
+                }
+            }
+            function myfunction2() {
+                var x = document.getElementById("minicart");
+
+
+                var x1 = document.getElementById("minicart1");
+
+                if (x1.style.display === "block") {
+                    x1.style.display = "none";
+                }
+
+                else {
+                    x1.style.display = "block";
+                }
+                x.style.display = "none";
+            }
+            function buy() {
+                var x = document.getElementById("minicart1");
+                var x1 = document.getElementById("z").value;
+                if (x1 == "0") {
+                    x.style.display = "none";
+                }
+                else {
+                    x.style.display = "block";
+                }
+            }
+            function myFunction1() {
+                $('.btnx').click(function () {
+                    myvar = this.id;
+                    var x = document.getElementById("oneorder" + myvar);
+                    var x1 = document.getElementById(myvar);
+                    //var x2 = document.getElementById("inminicart" + myvar);
+                    var li = document.getElementById(myvar).value;
+                    preid = li;
+                    console.log(li);
+                    console.log(preid)
+                    //       $.post("/Home/removerow", { id: li }, function (data) {
+                    //    alert(data);
+                    //});
+                    $.ajax({
+                        url: "/Home/removerow",
+                        datatype: "text",
+                        data: { 'id': li },
+                        type: "POST",
+                        success: function (data) {
+                            $('#testarea').html("All OK");
+                        },
+                        error: function () {
+                            $("#testarea").html("ERROR");
+                        }
+                    });
+                    @*location.href = '@Url.Action("removerow", "Home", new {id=preid})';*@
+
+
+                    @*@{  var x = new metadatapreviousorder();
+                    FormCollection form = new FormCollection();
+                    var p = form["xpre"];
+                    x.removerow(Convert.ToInt32(p));
+                }*@
+                    x1.style.display = "none";
+                    x.style.display = "none";
+                    x.style.background = "#faf9f9";
+                    x.style.border = "none";
+                    x.style.boxShadow = "none";
+                });
+            }
+            function myFunctiont() {
+                var x = document.getElementById("minicart");
+                x.style.display = "none";
+
+            }
+        </script>

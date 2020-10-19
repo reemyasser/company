@@ -1,0 +1,119 @@
+﻿@model company.Models.Users
+@using company
+
+<link href="~/css/style_signup.css" rel='stylesheet' type='text/css' />
+<script type="text/javascript" src="~/js/jquery-2.1.4.min.js"></script>
+
+@if (ViewBag.Status != null && Convert.ToBoolean(ViewBag.Status))
+{
+
+    if (ViewBag.Message != null)
+    {
+        <div class="alert-success">
+            <strong>Success</strong>@ViewBag.Message
+
+        </div>
+
+    }
+}
+
+else
+{
+    using (@Html.BeginForm())
+    {
+        
+        @Html.AntiForgeryToken()
+    <hr />
+        @Html.ValidationSummary(true)
+        
+        
+        <div class="w3-agile-signup-top">
+            <h1> Signup Form</h1>
+            <div class="main">
+                <div class="login-top left">
+                    <div class="social_icons">
+                        @*<div class="w3-signup-head-top">
+                            <h3>Signup with</h3>
+                        </div>
+                        <!-- Facebook -->
+                        <div class="slide-social w3l">
+                            <a href="#">
+
+                                <div class="facebook icon"> <i class="facebook"></i> </div>
+                                <div class="facebook slide">
+                                    <p>Facebook</p>
+                                </div>
+                                <div class="clear"></div>
+                            </a>
+                        </div>
+                        <!-- Twitter -->
+                        <div class="slide-social w3l">
+                            <a href="#">
+                                <div class="twitter icon"> <i class="twitter"></i></div>
+                                <div class="twitter slide">
+                                    <p>Twitter</p>
+                                </div>
+                                <div class="clear"></div>
+                            </a>
+                        </div>*@
+                        @*<div class="w3-signup-head2-top">
+                            <h3>OR</h3>
+                        </div>*@
+
+                    </div>
+                    <form action="#" method="post">
+                        <div >
+                            <input type="text" name="FirstName" class="name" placeholder="First Name" required="">
+                            @Html.ValidationMessageFor(model => model.FirstName)
+                        </div>
+
+                        <div >
+                            <input type="text" name="LastName" class="name" placeholder="Last Name" required="">
+                                   @Html.ValidationMessageFor(model => model.LastName)></div>
+                        <div >
+                            <input type="text" name="Email" class="email" placeholder="Your Email" required="">
+                            @Html.ValidationMessageFor(model => model.Email)
+                            @Html.ValidationMessage("emailexist")
+                        </div>
+                       
+                        <div >
+                            <input type="password" name="Password" class="password" placeholder="Password" required="">
+                            @Html.ValidationMessageFor(model => model.Password)
+                        </div>
+                        <div >
+                            <input type="password" name="ConfirmPassword" class="password" placeholder="Confirm Password" required="">
+                            @Html.ValidationMessageFor(model => model.ConfirmPassword)
+                        </div>
+                        <input type="submit" value="SIGN UP">
+                    </form>
+                    <div class="w3-bottom-text">
+                        <h3><a href="#">Already Have an account<span>?</span></a></h3>
+                        <h4><a href="login">Login</a></h4>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+
+
+            </div>
+            <div class="clear"></div>
+            <div class="copy-right w3l-agile">
+
+            </div>
+            <div class="clear"></div>
+        </div>
+    }
+    if (ViewBag.Message != null)
+    {
+        <div class="alert-danger">
+
+            <strong> Error !</strong> @ViewBag.Message
+
+        </div>
+    }
+
+
+}
+
+<script src="js/jquery.vide.min.js"></script>
+
+

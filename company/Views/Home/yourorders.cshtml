@@ -1,0 +1,93 @@
+﻿@model IEnumerable< company.Models.OrderDetails>
+@using company.Models;
+<link href="~/css/yourorders.css" rel="stylesheet" type="text/css" media="all" />
+@{
+    ViewBag.Title = "yourorders";
+    tshirtsEntities db = new tshirtsEntities();
+    int i = 0;
+}
+
+<h2>Your Orders</h2>
+@using (@Html.BeginForm("yourorders", "Home", FormMethod.Get)) { 
+<input type="hidden" name="email" value="@HttpContext.Current.User.Identity.Name" />
+<hr />
+ var us1 = (from o in db.Users
+                      where o.Email == HttpContext.Current.User.Identity.Name
+                      select o.UserId).FirstOrDefault(); 
+    
+    
+    var coun = (from o in db.Order
+              where o.UserId == us1
+              select o.UserId).Count();
+if (coun > 0) { 
+
+<table class="tborder">
+
+    <tr>
+        <th> </th>
+        <th>your model</th>
+        <th> Qouentity</th>
+        <th> Size</th>
+        <th>Color </th>
+        <th>date</th>
+    </tr>
+    @foreach (var x in Model)
+    { 
+          var userid = (from o in db.Order
+                          where o.OrderId == x.OrderId
+                          select o.UserId).FirstOrDefault();
+
+            var us = (from o in db.Users
+                      where o.Email == HttpContext.Current.User.Identity.Name
+                      select o.UserId).FirstOrDefault(); 
+                      
+                      
+            if (us == userid)
+            { 
+        
+        
+        
+    <tr>
+        @{i++;}
+        <td> @i</td>
+        <td>
+            @{
+                
+          var Img = (from p in db.Color
+                     where p.ColorId == x.ColorId
+                     select p.Img).FirstOrDefault();
+            }
+            <img class="img-order" alt="@Img"
+                 src="data:image/jpg;base64,@Convert.ToBase64String(Img)" />
+
+        </td>
+        <td>
+            <label>@x.Quentity</label>
+        </td>
+        <td>
+            <label>@x.Size</label>
+        </td>
+        <td>
+            @{ var color = (from c in db.Color
+                            where c.ColorId == x.ColorId
+                            select c.color1).FirstOrDefault(); }
+            <label>@color</label>
+        </td>
+        @{ var date = (from o in db.Order
+                       where o.OrderId == x.OrderId
+                       select o.OrderDate).FirstOrDefault(); }
+        <td>@date</td>
+    </tr> 
+            }
+            
+    }
+    
+</table>}
+else
+{ 
+    <label class="lblnoord"><strong> No Orders</strong></label>
+
+}
+
+
+}

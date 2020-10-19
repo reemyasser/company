@@ -1,0 +1,34 @@
+﻿@model IEnumerable<company.Models.Users>
+<link href="~/css/fogetpass.css" rel="stylesheet" type="text/css" media="all" />
+
+@{
+    ViewBag.Title = "matchcode";
+}
+
+@if (ViewBag.status != null && Convert.ToBoolean(ViewBag.status))
+{
+
+    <div class="alert alert-danger">
+
+
+        <strong> wrong!</strong>  please enter yout correct code
+    </div>
+
+}
+
+
+@using (Html.BeginForm("matchcode", "Home", FormMethod.Post, new { mail = Request.Form["mail"]}))
+{
+
+    <div id="forgotpass" class="forgotpass">
+        <div class="inpu">
+            <div>
+                <input id="inputtxt" class="inputtxt" type="text" name="code" placeholder="enter your code" required="" />
+                @Html.ValidationMessage("code", "please enter code")
+            </div>
+
+            <input id="inputsubmit" class="inputsubmit"  type="submit" value="Confirm"/>
+        </div>
+    </div>
+    <input name="mail" type="hidden" value="@Request.QueryString["mail"]" />
+}

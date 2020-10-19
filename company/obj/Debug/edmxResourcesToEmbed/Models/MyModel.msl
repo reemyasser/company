@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="tshirtsModelStoreContainer" CdmEntityContainer="tshirtsEntities">
+    <EntitySetMapping Name="Product">
+      <EntityTypeMapping TypeName="tshirtsModel.Product">
+        <MappingFragment StoreEntitySet="Product">
+          <ScalarProperty Name="whalesaleprice" ColumnName="whalesaleprice" />
+          <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ordersview">
+      <EntityTypeMapping TypeName="tshirtsModel.ordersview">
+        <MappingFragment StoreEntitySet="ordersview">
+          <ScalarProperty Name="OrderDetailsId" ColumnName="OrderDetailsId" />
+          <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+          <ScalarProperty Name="Quentity" ColumnName="Quentity" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="Img" ColumnName="Img" />
+          <ScalarProperty Name="color" ColumnName="color" />
+          <ScalarProperty Name="Size" ColumnName="Size" />
+          <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+          <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+          <ScalarProperty Name="ColorId" ColumnName="ColorId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="OrderDetails">
+      <EntityTypeMapping TypeName="tshirtsModel.OrderDetails">
+        <MappingFragment StoreEntitySet="OrderDetails">
+          <ScalarProperty Name="ColorId" ColumnName="ColorId" />
+          <ScalarProperty Name="Size" ColumnName="Size" />
+          <ScalarProperty Name="Quentity" ColumnName="Quentity" />
+          <ScalarProperty Name="OrderDetailsId" ColumnName="OrderDetailsId" />
+          <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+          <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Color">
+      <EntityTypeMapping TypeName="tshirtsModel.Color">
+        <MappingFragment StoreEntitySet="Color">
+          <ScalarProperty Name="Img" ColumnName="Img" />
+          <ScalarProperty Name="color1" ColumnName="color" />
+          <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+          <ScalarProperty Name="ColorId" ColumnName="ColorId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Order">
+      <EntityTypeMapping TypeName="tshirtsModel.Order">
+        <MappingFragment StoreEntitySet="Order">
+          <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+          <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PreviousOrder">
+      <EntityTypeMapping TypeName="tshirtsModel.PreviousOrder">
+        <MappingFragment StoreEntitySet="PreviousOrder">
+          <ScalarProperty Name="userid" ColumnName="userid" />
+          <ScalarProperty Name="previd" ColumnName="previd" />
+          <ScalarProperty Name="productid" ColumnName="productid" />
+          <ScalarProperty Name="color" ColumnName="color" />
+          <ScalarProperty Name="Quentity" ColumnName="Quentity" />
+          <ScalarProperty Name="Size" ColumnName="Size" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="tshirtsModel.Users">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="ActivationCode" ColumnName="ActivationCode" />
+          <ScalarProperty Name="IsEmailVerified" ColumnName="IsEmailVerified" />
+          <ScalarProperty Name="Email" ColumnName="Email" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="UserId" ColumnName="UserId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

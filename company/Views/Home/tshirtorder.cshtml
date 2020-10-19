@@ -1,0 +1,332 @@
+﻿
+@model IEnumerable<company.Models.Color>
+
+@using company.Models
+<script src="https://gh-canon.github.io/misc-demos/log-test-click.js" defer></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<link href="~/css/styleorder.css" rel="stylesheet" type="text/css" media="all" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   
+    <script src="~/js/imagezoom.js">
+
+    </script>
+<script>
+    function show(id) {
+        document.getElementById(id).style.visibility = "visible";
+    }
+    function hide(id) {
+        document.getElementById(id).style.visibility = "hidden";
+    }
+</script>
+@Html.ValidationSummary(true)
+
+
+   @using (Html.BeginForm("addtocart", "Home", FormMethod.Post))
+   {
+<div class="all_info">
+    <div class="info_img">
+@{
+       tshirtsEntities db = new tshirtsEntities();
+       int i = 0;
+       int No = 0;
+       string color = " ";
+       int ii = 0;
+}
+
+        <div class="img-zoom-container" onmouseover="show('myresult')" onmouseout="hide('myresult')">
+          
+        @foreach (var item in Model)
+        {
+
+            if (item.ProductId == Convert.ToInt32(Request.QueryString["id1"]))
+            {
+                i++;
+
+              <div class="mydiv" id="@("div" + i)">
+               
+                <img alt="@item.Img" id="@("myimage" + i)"
+                     src="data:image/jpg;base64,@Convert.ToBase64String(item.Img)" style="width: 300px; height:300px" />
+
+
+            </div>
+           
+            @*<div class="mydiv" id="div2">
+                <img id="myimage2" src="~/images/t2.jpg" width="300" height="300">
+            </div>
+            <div class="mydiv" id="div3">
+                <img id="myimage3" src="~/images/t3.jpg" width="300" height="300">
+            </div>
+            <div class="mydiv" id="div4">
+                <img id="myimage4" src="~/images/t4.jpg" width="300" height="300">
+            </div>
+            <div class="mydiv" id="div5">
+                <img id="myimage5" src="~/images/t5.jpg" width="300" height="300">
+            </div>*@}
+        }
+            <div id="myresult" class="img-zoom-result"></div>
+        </div>
+        <div class="tshirt_color"> 
+            
+            @{i = 0;}
+              @foreach (var item in Model)
+              {
+
+                  if (item.ProductId == Convert.ToInt32(Request.QueryString["id1"]))
+                  {
+                      i++;
+
+
+                     <a href="#" class="mymultiplediv" id="@i">
+                         <img alt="@item.Img" class="color" id="colorid"
+
+                              src="data:image/jpg;base64,@Convert.ToBase64String(item.Img)" style="width: 50px; height:50px" />
+               
+
+                         @{
+                             
+                      color = item.color1;
+
+                      No = i;
+                         }
+                        
+            </a>
+               
+           
+            @*<a href="#" class="mymultiplediv" id="1">
+                <img class="color" id="colorid" src="~/images/t1.jpg" width="50" height="50"></a>
+            <a href="#" class="mymultiplediv" id="2">
+                <img class="color" id="colorid" src="~/images/t2.jpg" width="50" height="50">
+            </a>
+            <a href="#" class="mymultiplediv" id="3">
+                <img class=" color" id="colorid" src="~/images/t3.jpg" width="50" height="50">
+            </a> 
+            <a href="#" class="mymultiplediv" id="4">
+                <img class="color" id="colorid" src="~/images/t4.jpg" width="50" height="50">
+            </a>
+            <a href="#" class="mymultiplediv" id="5"> 
+                  <img class="color" id="colorid" src="~/images/t5.jpg" width="50" height="50">
+</a>*@}
+
+
+
+              }
+</div>
+    </div>
+    @{
+              var idp = Convert.ToInt32(Request.QueryString["id1"]);
+              var pname = (from p in (db.Product)
+                           where p.ProductId == idp
+                           select p.ProductName).FirstOrDefault(); }
+  
+    <div class="middle_info">
+        <label style="font:bold; font-size:20px">  @pname  </label>
+        <hr />
+
+        <table border="1">
+            <tr>
+                <th>Number of piece</th>
+                <td>1-3</td>
+                <td>4-20</td>
+                <td>21- ...</td>
+            </tr>
+            @{
+       var price = (from p in (db.Product)
+                    where p.ProductId == idp
+                    select p.Price).FirstOrDefault();
+       var price3 = (from p in (db.Product)
+                    where p.ProductId == idp
+                    select p.whalesaleprice).FirstOrDefault();
+       var p1 = price3 - 10;
+            }
+            <tr>
+                <th>Price</th>
+                <td>@price £ </td>
+                <td> @price3 £  </td>
+                <td>@p1 £ </td>
+            </tr>
+        </table>
+        <br/>
+        
+        <div class="button_size">
+            <label> Size : </label><br />
+            <input required="" type="radio" name="Size" value="S" /> S <br />
+            <input required="" type="radio" name="Size" value="L" /> L <br />
+            <input required="" type="radio" name="Size" value="XL" /> XL <br />
+            <input required="" type="radio" name="Size" value="XXL" />  XXL <br />
+            @Html.ValidationMessage("Size", "please enter Size")
+        </div>
+        <br/>
+        <label >Quentity : </label>
+        <div>
+
+            <input required="" name="Quentity" type="number" /><br /><br />
+            @Html.ValidationMessage("Quentity", "please enter quentity")
+        </div>
+        <br />
+        <label>Color : </label>
+@{i = 0;}
+       
+            @foreach (var item in Model)
+            {
+
+                if (item.ProductId == Convert.ToInt32(Request.QueryString["id1"]))
+                {
+                    i++;
+                    <label  for="colorid" class="myid" id="@("id" + i)">@item.color1</label>
+
+                }
+            }
+        
+       
+        <input type="hidden" id="colorid2" name="colorid"  />
+        <input type="hidden" name="productid" value="@Convert.ToInt32(Request.QueryString["id1"])" />
+        <input type="hidden" name="email" value="@(Request.QueryString["email"])" />
+
+               @*<label>Adress : </label>
+
+        <textarea rows="5" cols="60" placeholder="please enter your Details Adress" name="description"></textarea><br>*@<br />
+        <br />
+    </div>
+   
+    <div class="right_info">
+        <br />
+        <br />
+
+
+        <input type="submit" value="Add to cart" class="btn_addtocart" />
+
+        <br>
+
+
+    </div>
+</div>
+
+
+       
+   }
+@*@using (Html.BeginForm("Contact", "Home", FormMethod.Get)) { 
+<div class="right_info1">
+    <input type="submit" value="Contact Supplier" class="btn_addtocart" />
+    <label class="lbl_contact"> for product pricing <br />or <br />other inquires</label>
+</div>*@
+
+
+<script>
+    $(document).ready(function () {
+        $('#div' + "1").show();
+        $('#id' + "1").show();
+        imageZoom(('myimage' + "1"), "myresult");
+        var newtext = document.querySelector('#id' + "1");
+       
+        $("#colorid2").attr("value", newtext.textContent);
+        $('.mymultiplediv').mouseover(function () {
+            myvar = this.id;
+            $("div.mydiv").hide();
+            $('#div' + myvar).show();
+            $("label.myid").hide();
+            $('#id' + myvar).show();
+            ii = myvar;
+            imageZoom(('myimage' + myvar), "myresult");
+            var newtext = document.querySelector('#id' + myvar);
+            console.log(newtext.textContent);
+            $("#colorid2").attr("value", newtext.textContent);
+            //$("colorid2").val(newtext.textContent);
+        });
+
+
+
+    });
+</script>
+<script>
+    function myfunction() {
+        var i = window.my;
+        return i;
+    }
+    
+</script>
+@*<script>
+    // Initiate zoom effect:
+    $('.mymultiplediv').mouseover(function () {
+        myvar = this.id;
+
+       
+    });
+</script>*@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*<style>
+    .mymultiplediv {
+        cursor: pointer;
+    }
+
+    .mymultiplediv {
+        width: 150px;
+        margin: 10px;
+        padding: 10px;
+        color: #2b96cc;
+        text-align: center;
+    }
+
+    .mydiv {
+        display: none;
+        padding: 10px;
+        text-align: center;
+    }
+
+        .mydiv img {
+            margin: 0 auto;
+        }
+
+        .mydiv span {
+            text-align: center;
+            background: #ffdede;
+            padding: 6px 10px;
+            display: block;
+            width: 100px;
+            border: 1px solid #d47c7c;
+            margin: 8px auto;
+        }
+</style>
+
+
+
+
+
+<p class="text-center heading">Hover Below links to display image</p>
+<div class="text-center">
+    <ul class="list-inline">
+        <li><a href="#" class="mymultiplediv" id="one">Show image one</a></li>
+        <li><a href="#" class="mymultiplediv" id="two">Show image two</a></li>
+        <li><a href="#" class="mymultiplediv" id="three">Show image three</a></li>
+        <li><a href="#" class="mymultiplediv" id="fore">Show image fore</a></li>
+    </ul>
+</div>
+<div class="mydiv" id="divone"><img src="~/images/t1.jpg" alt="Manager" class="img-responsive img-thumbnail" /><span>Manager</span></div>
+<div class="mydiv" id="divtwo"><img src="~/images/t2.jpg" alt="HR" class="img-responsive img-thumbnail" /><span>HR</span></div>
+<div class="mydiv" id="divthree"><img src="~/images/t3.jpg" alt="Developer" class="img-responsive img-thumbnail" /><span>Developer</span></div>
+<div class="mydiv" id="divfore"><img src="~/images/t4.jpg" alt="Designer" class="img-responsive img-thumbnail" /><span>Designer</span></div>*@
+
+
